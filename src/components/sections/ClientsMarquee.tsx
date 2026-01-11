@@ -28,33 +28,52 @@ const BRAND_NAMES: Record<number, string> = {
 // Maximum number of logos to check (9 logos)
 const MAX_LOGOS = 9;
 
+interface LogoData {
+  path: string;
+  index: number;
+  loaded: boolean;
+}
+
 export function ClientsMarquee() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [availableLogos, setAvailableLogos] = useState<string[]>([]);
+  const [availableLogos, setAvailableLogos] = useState<LogoData[]>([]);
   const [logosLoaded, setLogosLoaded] = useState(false);
+  const imageRefs = useRef<Map<number, HTMLImageElement | null>>(new Map());
 
-  // Check which logos are available
+  // Check which logos are available and preload them
   useEffect(() => {
     const checkLogos = async () => {
       const logoPromises = [];
-      const foundLogos: string[] = [];
+      const foundLogos: LogoData[] = [];
 
+      // Preload critical logos (first 3) with higher priority
       for (let i = 1; i <= MAX_LOGOS; i++) {
         const logoPath = getLogoPath(i);
+        const isPriority = i <= 3; // Preload first 3 logos
+
         logoPromises.push(
-          fetch(logoPath, { method: 'HEAD' })
-            .then((response) => {
-              if (response.ok) {
-                foundLogos.push(logoPath);
-              }
-            })
-            .catch(() => {
-              // Logo not found, skip
-            })
+          new Promise<void>((resolve) => {
+            // Use Image API for better preload control
+            const img = new Image();
+            img.onload = () => {
+              foundLogos.push({ path: logoPath, index: i, loaded: true });
+              resolve();
+            };
+            img.onerror = () => {
+              resolve();
+            };
+            // Add fetchpriority for critical logos (if supported)
+            if (isPriority && 'fetchPriority' in img) {
+              (img as any).fetchPriority = 'high';
+            }
+            img.src = logoPath;
+          })
         );
       }
 
       await Promise.all(logoPromises);
+      // Sort by index to maintain order
+      foundLogos.sort((a, b) => a.index - b.index);
       setAvailableLogos(foundLogos);
       setLogosLoaded(true);
     };
@@ -149,8 +168,8 @@ export function ClientsMarquee() {
         </div>
       </div>
       
-      {/* Premium Marquee Container - Higher z-index context */}
-      <div className="relative z-[1]">
+      {/* Premium Marquee Container - Higher z-index context with extra vertical spacing */}
+      <div className="relative z-[1] py-6 md:py-8">
         {/* Gradient fade edges for premium effect - Lower z-index than cards */}
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background via-background/80 to-transparent z-[15] pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background via-background/80 to-transparent z-[15] pointer-events-none" />
@@ -162,8 +181,8 @@ export function ClientsMarquee() {
           style={{ scrollBehavior: 'auto' }}
         >
           <div className="flex items-center gap-8 px-8">
-            {availableLogos.map((logoPath, index) => {
-              const logoIndex = index + 1;
+            {availableLogos.map((logoData) => {
+              const { path: logoPath, index: logoIndex, loaded } = logoData;
               const brandName = BRAND_NAMES[logoIndex] || `Client ${logoIndex}`;
               
               return (
@@ -202,18 +221,25 @@ export function ClientsMarquee() {
                       {/* Subtle inner glow */}
                       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       
-                      {/* Logo Image */}
-                      <div className="relative z-10 mb-3">
-                        <img
-                          src={logoPath}
-                          alt={`${brandName} Logo`}
-                          className="h-10 md:h-14 w-auto object-contain max-w-[160px] md:max-w-[200px] transition-all duration-500 group-hover:brightness-110 group-hover:contrast-105 mx-auto"
-                          loading="lazy"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
-                          }}
-                        />
+                      {/* Logo Image Container - Fixed dimensions to prevent layout shift */}
+                      <div className="relative z-10 mb-3 h-10 md:h-14 flex items-center justify-center">
+                        {loaded ? (
+                          <img
+                            ref={(el) => {
+                              if (el) imageRefs.current.set(logoIndex, el);
+                            }}
+                            src={logoPath}
+                            alt={`${brandName} Logo`}
+                            className="h-full w-auto object-contain max-w-[160px] md:max-w-[200px] transition-all duration-500 group-hover:brightness-110 group-hover:contrast-105"
+                            loading="lazy"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = 'none';
+                            }}
+                          />
+                        ) : (
+                          <div className="h-full w-[160px] md:w-[200px] bg-gradient-to-r from-muted via-muted/50 to-muted rounded animate-pulse" />
+                        )}
                       </div>
                       
                       {/* Brand Name */}
