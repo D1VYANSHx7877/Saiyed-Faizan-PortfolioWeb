@@ -61,7 +61,7 @@ export const IntroVideo = ({ onComplete, onExitStart }: IntroVideoProps) => {
 
     return (
         <div className={cn(
-            "fixed inset-0 z-[100] bg-black flex items-center justify-center transition-transform duration-[1500ms] ease-[cubic-bezier(0.87,0,0.13,1)] shadow-2xl",
+            "fixed inset-0 z-[100] bg-black flex items-center justify-center transition-all duration-[1500ms] ease-[cubic-bezier(0.87,0,0.13,1)] shadow-2xl overflow-hidden",
             isExiting ? "-translate-y-full shadow-black/50" : "translate-y-0"
         )}>
             <video
