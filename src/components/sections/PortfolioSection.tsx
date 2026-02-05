@@ -160,7 +160,10 @@ export function PortfolioSection() {
                     Showreel Video
                   </p>
                   <p className="text-sm md:text-base text-muted-foreground mb-4">
-                    Click play to view the latest work showcase
+                    Video hosted externally for optimal performance.
+                  </p>
+                  <p className="text-xs text-muted-foreground/80 mb-4">
+                    Contact me to view the latest work showcase.
                   </p>
                 </div>
               </div>

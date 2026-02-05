@@ -1,8 +1,8 @@
 {
-  "buildCommand": "git lfs pull && npm run build",
+  "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "devCommand": "npm run dev",
-  "installCommand": "npm install && git lfs install",
+  "installCommand": "npm install",
   "framework": "vite",
   "rewrites": [
     {
