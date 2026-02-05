@@ -29,5 +29,4 @@ dist-ssr
 *.sln
 *.sw?
 
-# Local large media (not tracked in git; keep only on dev machine)
-/public/assets/video/Showreel.mp4
+﻿# Local large media (not tracked in git; keep only on dev machine)
