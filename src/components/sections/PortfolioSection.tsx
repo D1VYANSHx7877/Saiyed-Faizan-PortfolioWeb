@@ -116,7 +116,7 @@ export function PortfolioSection() {
               onWaiting={() => console.log('Showreel video buffering')}
               onStalled={() => console.log('Showreel video stalled')}
             >
-              <source src="/assets/video/Showreel.mp4" type="video/mp4" />
+              <source src="YOUR_VIDEO_URL_HERE" type="video/mp4" />
               <track kind="captions" srcLang="en" label="English" />
               Your browser does not support the video tag.
             </video>
@@ -157,13 +157,13 @@ export function PortfolioSection() {
                 <div className="text-center px-6">
                   <Play className="w-16 h-16 text-primary/50 mx-auto mb-4" />
                   <p className="text-lg md:text-xl font-semibold text-foreground mb-2">
-                    Showreel Video
+                    Showreel Coming Soon
                   </p>
                   <p className="text-sm md:text-base text-muted-foreground mb-4">
-                    Video hosted externally for optimal performance.
+                    Video is being uploaded to external hosting for optimal performance.
                   </p>
                   <p className="text-xs text-muted-foreground/80 mb-4">
-                    Contact me to view the latest work showcase.
+                    Will be available shortly - stay tuned!
                   </p>
                 </div>
               </div>
