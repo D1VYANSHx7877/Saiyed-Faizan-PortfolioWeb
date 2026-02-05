@@ -8,6 +8,7 @@ export function PortfolioSection() {
   const [activeFolder, setActiveFolder] = useState<string | null>(null);
   const [selectedMedia, setSelectedMedia] = useState<{ file: DriveFile; type: 'image' | 'video' } | null>(null);
   const [showreelError, setShowreelError] = useState(false);
+  const [showreelLoading, setShowreelLoading] = useState(true);
 
   // Set first folder as active when loaded
   if (!activeFolder && folders.length > 0) {
@@ -57,23 +58,42 @@ export function PortfolioSection() {
 
         {/* Showreel Feature (Above Tabs) */}
         <div className="mb-16 md:mb-20 rounded-2xl overflow-hidden border border-border/50 shadow-neon bg-card relative group">
-          <div className="aspect-video w-full relative bg-black">
+          <div className="aspect-video w-full relative bg-gradient-to-br from-primary/20 via-accent/10 to-primary/20">
+            {/* Loading state */}
+            {showreelLoading && !showreelError && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm z-10">
+                <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin mb-4" />
+                <p className="text-sm text-muted-foreground">Loading showreel...</p>
+              </div>
+            )}
+
             <video
               className="w-full h-full object-cover"
               controls
               playsInline
-              preload="metadata"
+              preload="auto"
               poster="/assets/images/hero-image.jpg"
-              onError={() => setShowreelError(true)}
+              onLoadedData={() => {
+                setShowreelLoading(false);
+                setShowreelError(false);
+              }}
+              onCanPlay={() => setShowreelLoading(false)}
+              onError={(e) => {
+                console.error('Showreel video error:', e);
+                setShowreelError(true);
+                setShowreelLoading(false);
+              }}
+              onLoadStart={() => setShowreelLoading(true)}
             >
               <source src="/assets/video/Showreel.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
             </video>
 
             {/* Gradient Overlay */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
 
             {/* Copy overlay */}
-            <div className="pointer-events-none absolute bottom-4 left-4 md:bottom-8 md:left-8">
+            <div className="pointer-events-none absolute bottom-4 left-4 md:bottom-8 md:left-8 z-10">
               <span className="inline-block px-3 py-1 mb-2 text-xs font-bold tracking-widest text-black uppercase bg-white rounded-full">
                 Featured
               </span>
@@ -82,15 +102,21 @@ export function PortfolioSection() {
               </h3>
             </div>
 
-            {/* Fallback if video fails to load in production */}
+            {/* Fallback if video fails to load */}
             {showreelError && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 backdrop-blur-sm">
-                <p className="text-sm md:text-base text-muted-foreground mb-2">
-                  Showreel video is currently unavailable.
-                </p>
-                <p className="text-xs md:text-sm text-muted-foreground/80">
-                  Please check back soon or contact for latest work.
-                </p>
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/95 backdrop-blur-sm z-20">
+                <div className="text-center px-6">
+                  <Play className="w-16 h-16 text-primary/50 mx-auto mb-4" />
+                  <p className="text-lg md:text-xl font-semibold text-foreground mb-2">
+                    Showreel Video Unavailable
+                  </p>
+                  <p className="text-sm md:text-base text-muted-foreground mb-4">
+                    The video file is currently loading or unavailable.
+                  </p>
+                  <p className="text-xs text-muted-foreground/80">
+                    Please refresh the page or check back later.
+                  </p>
+                </div>
               </div>
             )}
           </div>
