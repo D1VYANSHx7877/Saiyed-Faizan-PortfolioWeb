@@ -7,6 +7,7 @@ export function PortfolioSection() {
   const { folders, loading, error, getImageUrl, getVideoEmbedUrl, isVideo, isImage, refetch } = useGoogleDrivePortfolio();
   const [activeFolder, setActiveFolder] = useState<string | null>(null);
   const [selectedMedia, setSelectedMedia] = useState<{ file: DriveFile; type: 'image' | 'video' } | null>(null);
+  const [showreelError, setShowreelError] = useState(false);
 
   // Set first folder as active when loaded
   if (!activeFolder && folders.length > 0) {
@@ -56,21 +57,23 @@ export function PortfolioSection() {
 
         {/* Showreel Feature (Above Tabs) */}
         <div className="mb-16 md:mb-20 rounded-2xl overflow-hidden border border-border/50 shadow-neon bg-card relative group">
-          <div className="aspect-video w-full relative">
+          <div className="aspect-video w-full relative bg-black">
             <video
               className="w-full h-full object-cover"
-              autoPlay
-              loop
-              muted
+              controls
               playsInline
-              controls={true}
+              preload="metadata"
+              poster="/assets/images/hero-image.jpg"
+              onError={() => setShowreelError(true)}
             >
               <source src="/assets/video/Showreel.mp4" type="video/mp4" />
             </video>
-            {/* Gradient Overlay (only visible when paused/hovered ideally, but simple overlay for now) */}
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background/40 to-transparent" />
 
-            <div className="absolute bottom-4 left-4 md:bottom-8 md:left-8 pointer-events-none">
+            {/* Gradient Overlay */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+
+            {/* Copy overlay */}
+            <div className="pointer-events-none absolute bottom-4 left-4 md:bottom-8 md:left-8">
               <span className="inline-block px-3 py-1 mb-2 text-xs font-bold tracking-widest text-black uppercase bg-white rounded-full">
                 Featured
               </span>
@@ -78,6 +81,18 @@ export function PortfolioSection() {
                 Visual Showreel
               </h3>
             </div>
+
+            {/* Fallback if video fails to load in production */}
+            {showreelError && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 backdrop-blur-sm">
+                <p className="text-sm md:text-base text-muted-foreground mb-2">
+                  Showreel video is currently unavailable.
+                </p>
+                <p className="text-xs md:text-sm text-muted-foreground/80">
+                  Please check back soon or contact for latest work.
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
