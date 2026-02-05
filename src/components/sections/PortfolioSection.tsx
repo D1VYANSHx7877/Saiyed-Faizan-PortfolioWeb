@@ -65,7 +65,7 @@ export function PortfolioSection() {
               playsInline
               controls={true}
             >
-              <source src="/assets/video/showreel.webm" type="video/webm" />
+              <source src="/assets/video/Showreel.mp4" type="video/mp4" />
             </video>
             {/* Gradient Overlay (only visible when paused/hovered ideally, but simple overlay for now) */}
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background/40 to-transparent" />

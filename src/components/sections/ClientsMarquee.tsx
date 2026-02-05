@@ -107,8 +107,8 @@ export function ClientsMarquee() {
     );
   }
 
-  // Double the logos for seamless scrolling
-  const displayedLogos = [...availableLogos, ...availableLogos, ...availableLogos];
+  // Duplicate logos for seamless scrolling loop
+  const displayedLogos = [...availableLogos, ...availableLogos];
 
   return (
     <section className="py-16 md:py-24 bg-gradient-to-b from-background via-card to-background relative overflow-hidden">
@@ -126,7 +126,7 @@ export function ClientsMarquee() {
       </div>
 
       {/* Premium Marquee Container - Higher z-index context */}
-      <div className="relative z-[1] overflow-hidden">
+      <div className="relative z-[1] overflow-hidden group">
         {/* Gradient fade edges for premium effect - Lower z-index than cards */}
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background via-background/80 to-transparent z-[15] pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background via-background/80 to-transparent z-[15] pointer-events-none" />
@@ -134,11 +134,7 @@ export function ClientsMarquee() {
         {/* Marquee Scroll Container - Proper overflow handling with padding moved INSIDE for hover states */}
         <div className="flex w-full overflow-hidden">
           <div
-            className="flex items-center gap-8 py-16 animate-infinite-scroll hover:pause"
-            style={{
-              // Dynamically calculate width based on item count to ensure smooth loop
-              width: 'max-content'
-            }}
+            className="flex items-center gap-8 py-16 animate-infinite-scroll will-change-transform group-hover:[animation-play-state:paused]"
           >
             {displayedLogos.map((logoData, i) => {
               const { path: logoPath, index: logoIndex, loaded } = logoData;

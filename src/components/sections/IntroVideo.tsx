@@ -67,7 +67,7 @@ export const IntroVideo = ({ onComplete, onExitStart }: IntroVideoProps) => {
             <video
                 ref={videoRef}
                 className="w-full h-full object-cover"
-                src="/assets/video/showreel.webm"
+                src="/assets/video/Showreel.mp4"
                 muted={isMuted}
                 playsInline
             />
