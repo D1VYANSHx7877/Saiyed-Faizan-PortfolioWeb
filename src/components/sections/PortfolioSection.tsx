@@ -71,26 +71,75 @@ export function PortfolioSection() {
               className="w-full h-full object-cover"
               controls
               playsInline
-              preload="auto"
+              preload="none"
+              muted
+              loop
               poster="/assets/images/hero-image.jpg"
               onLoadedData={() => {
                 setShowreelLoading(false);
                 setShowreelError(false);
+                console.log('Showreel video loaded successfully');
               }}
-              onCanPlay={() => setShowreelLoading(false)}
+              onCanPlay={() => {
+                setShowreelLoading(false);
+                console.log('Showreel video can play');
+              }}
               onError={(e) => {
                 console.error('Showreel video error:', e);
+                console.error('Video error code:', e.target?.error?.code);
+                console.error('Video error message:', e.target?.error?.message);
                 setShowreelError(true);
                 setShowreelLoading(false);
               }}
-              onLoadStart={() => setShowreelLoading(true)}
+              onLoadStart={() => {
+                setShowreelLoading(true);
+                console.log('Showreel video loading started');
+              }}
+              onPlay={() => {
+                console.log('Showreel video started playing');
+                // Hide play button when video starts
+                const playButton = document.querySelector('.group\\/play') as HTMLElement;
+                if (playButton) {
+                  playButton.style.opacity = '0';
+                  playButton.style.pointerEvents = 'none';
+                }
+              }}
+              onPause={() => {
+                console.log('Showreel video paused');
+                // Show play button when video pauses
+                const playButton = document.querySelector('.group\\/play') as HTMLElement;
+                if (playButton) {
+                  playButton.style.opacity = '1';
+                  playButton.style.pointerEvents = 'auto';
+                }
+              }}
+              onWaiting={() => console.log('Showreel video buffering')}
+              onStalled={() => console.log('Showreel video stalled')}
             >
               <source src="/assets/video/Showreel.mp4" type="video/mp4" />
+              <track kind="captions" srcLang="en" label="English" />
               Your browser does not support the video tag.
             </video>
 
-            {/* Gradient Overlay */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+            {/* Custom Play Button Overlay */}
+            <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none opacity-100 transition-opacity duration-300 group-hover:opacity-80">
+              <button
+                className="pointer-events-auto w-16 h-16 md:w-20 md:h-20 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 group/play opacity-100 group-hover:scale-105"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const video = e.currentTarget.closest('.relative')?.querySelector('video') as HTMLVideoElement;
+                  if (video) {
+                    video.play().catch(console.error);
+                    // Hide the button after clicking
+                    e.currentTarget.style.opacity = '0';
+                    e.currentTarget.style.pointerEvents = 'none';
+                  }
+                }}
+                aria-label="Play showreel video"
+              >
+                <Play className="w-6 h-6 md:w-8 md:h-8 text-black ml-1 group-hover/play:scale-110 transition-transform duration-200" />
+              </button>
+            </div>
 
             {/* Copy overlay */}
             <div className="pointer-events-none absolute bottom-4 left-4 md:bottom-8 md:left-8 z-10">
@@ -108,13 +157,10 @@ export function PortfolioSection() {
                 <div className="text-center px-6">
                   <Play className="w-16 h-16 text-primary/50 mx-auto mb-4" />
                   <p className="text-lg md:text-xl font-semibold text-foreground mb-2">
-                    Showreel Video Unavailable
+                    Showreel Video
                   </p>
                   <p className="text-sm md:text-base text-muted-foreground mb-4">
-                    The video file is currently loading or unavailable.
-                  </p>
-                  <p className="text-xs text-muted-foreground/80">
-                    Please refresh the page or check back later.
+                    Click play to view the latest work showcase
                   </p>
                 </div>
               </div>

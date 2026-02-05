@@ -21,6 +21,24 @@ const CLIENTS = [
 // Duplicate list for seamless scrolling
 const MARQUEE_ITEMS = [...CLIENTS, ...CLIENTS];
 
+// Gradient combinations for each client
+const getGradientClasses = (index: number) => {
+  const gradients = [
+    'from-primary/15 via-accent/10 to-primary/5',
+    'from-neon-purple/15 via-neon-cyan/10 to-neon-purple/5',
+    'from-neon-pink/15 via-neon-yellow/10 to-neon-pink/5',
+    'from-electric-blue/15 via-primary/10 to-electric-blue/5',
+    'from-accent/15 via-neon-purple/10 to-accent/5',
+    'from-neon-cyan/15 via-electric-blue/10 to-neon-cyan/5',
+    'from-primary/15 via-neon-pink/10 to-primary/5',
+    'from-neon-yellow/15 via-accent/10 to-neon-yellow/5',
+    'from-electric-blue/15 via-neon-cyan/10 to-electric-blue/5',
+    'from-neon-purple/15 via-neon-pink/10 to-neon-purple/5',
+    'from-accent/15 via-electric-blue/10 to-accent/5',
+  ];
+  return gradients[index % gradients.length];
+};
+
 export function ClientsMarquee() {
 
   return (
@@ -51,33 +69,29 @@ export function ClientsMarquee() {
                 key={`${client.id}-${index}`}
                 className="flex-shrink-0"
               >
-                <div className="relative flex flex-col items-center gap-3 px-6 py-4 rounded-2xl border border-border/60 backdrop-blur-sm shadow-card hover:shadow-[0_20px_60px_hsl(var(--primary)/0.25)] transition-all duration-500 hover:-translate-y-2 hover:scale-105 overflow-hidden group/logo">
-                  {/* Theme gradient background behind logo */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/15 to-primary/10 opacity-60 group-hover/logo:opacity-100 transition-opacity duration-500" />
+                <div className="relative flex flex-col items-center gap-3 px-6 py-5 rounded-xl border border-border/50 backdrop-blur-sm shadow-lg hover:shadow-[0_20px_60px_hsl(var(--primary)/0.15)] transition-all duration-500 hover:-translate-y-2 hover:scale-110 overflow-hidden group/logo animate-float" style={{ animationDelay: `${index * 0.1}s` }}>
+                  {/* Beautiful gradient backgrounds */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${getGradientClasses(index)} opacity-70 group-hover/logo:opacity-100 transition-opacity duration-500`} />
+                  <div className="absolute inset-0 bg-gradient-to-tl from-neon-purple/20 via-transparent to-neon-cyan/15 opacity-50 group-hover/logo:opacity-80 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary)/0.1),_transparent_70%)] opacity-60 group-hover/logo:opacity-90 transition-opacity duration-500" />
                   
-                  {/* Additional radial gradient for depth */}
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary)/0.3),_transparent_70%)] opacity-40 group-hover/logo:opacity-70 transition-opacity duration-500" />
+                  {/* Animated border glow */}
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/20 via-accent/15 to-primary/20 opacity-0 group-hover/logo:opacity-100 transition-opacity duration-500 blur-sm" />
+                  
+                  {/* Shimmer effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover/logo:opacity-100 group-hover/logo:animate-shimmer transition-opacity duration-700" />
                   
                   {/* Content container with proper z-index */}
                   <div className="relative z-10 flex flex-col items-center gap-3 w-full">
-                    <div className="h-14 md:h-16 flex items-center justify-center w-full">
+                    <div className="h-16 md:h-20 flex items-center justify-center w-full">
                       <img
                         src={client.logo}
                         alt={`${client.name} logo`}
-                        className="h-full w-auto max-w-[160px] object-contain transition-all duration-500"
-                        style={{
-                          filter: 'brightness(1.3) contrast(1.4) drop-shadow(0 0 10px hsl(var(--primary) / 0.5))',
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.filter = 'brightness(1.5) contrast(1.6) drop-shadow(0 0 15px hsl(var(--primary) / 0.7))';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.filter = 'brightness(1.3) contrast(1.4) drop-shadow(0 0 10px hsl(var(--primary) / 0.5))';
-                        }}
+                        className="h-full w-auto max-w-[160px] object-contain transition-all duration-500 group-hover/logo:brightness-110 group-hover/logo:drop-shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
                         loading="lazy"
                       />
                     </div>
-                    <p className="text-xs md:text-sm font-medium text-foreground/90 group-hover/logo:text-foreground transition-colors duration-500">
+                    <p className="text-sm font-medium text-foreground/90 group-hover/logo:text-foreground transition-colors duration-500">
                       {client.name}
                     </p>
                   </div>
