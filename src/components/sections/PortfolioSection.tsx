@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useGoogleDrivePortfolio, DriveFile } from '@/hooks/useGoogleDrivePortfolio';
 import { Play, X, ImageIcon, Loader2, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,28 @@ export function PortfolioSection() {
   const [selectedMedia, setSelectedMedia] = useState<{ file: DriveFile; type: 'image' | 'video' } | null>(null);
   const [showreelError, setShowreelError] = useState(false);
   const [showreelLoading, setShowreelLoading] = useState(true);
+  const [hasAutoplayed, setHasAutoplayed] = useState(false);
+  const showreelRef = useRef<HTMLDivElement>(null);
+
+  // Autoplay showreel when section comes into view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAutoplayed) {
+            setHasAutoplayed(true);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    if (showreelRef.current) {
+      observer.observe(showreelRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasAutoplayed]);
 
   // Set first folder as active when loaded
   if (!activeFolder && folders.length > 0) {
@@ -57,7 +79,7 @@ export function PortfolioSection() {
         )}
 
         {/* Showreel Feature (Above Tabs) */}
-        <div className="mb-16 md:mb-20 rounded-2xl overflow-hidden border border-border/50 shadow-neon bg-card relative group">
+        <div ref={showreelRef} className="mb-16 md:mb-20 rounded-2xl overflow-hidden border border-border/50 shadow-neon bg-card relative group">
           <div className="aspect-video w-full relative bg-gradient-to-br from-primary/20 via-accent/10 to-primary/20">
             {/* Loading state */}
             {showreelLoading && !showreelError && (
@@ -69,7 +91,7 @@ export function PortfolioSection() {
 
             <iframe
               className="w-full h-full"
-              src="https://www.youtube.com/embed/ebwIzfk1fBc?si=dOQ8q9KJomCUMGUx&rel=0&modestbranding=1&autohide=1&showinfo=0"
+              src={`https://www.youtube.com/embed/ebwIzfk1fBc?si=dOQ8q9KJomCUMGUx&rel=0&modestbranding=1&autohide=1&showinfo=0${hasAutoplayed ? '&autoplay=1&mute=1' : ''}`}
               title="Showreel Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -206,6 +228,7 @@ export function PortfolioSection() {
           <button
             onClick={() => setSelectedMedia(null)}
             className="absolute top-6 right-6 p-3 rounded-full bg-card border border-border hover:bg-secondary transition-colors z-10"
+            title="Close media viewer"
           >
             <X size={24} />
           </button>
@@ -227,6 +250,7 @@ export function PortfolioSection() {
                   className="w-full h-full rounded-xl"
                   allow="autoplay; fullscreen"
                   allowFullScreen
+                  title={`${selectedMedia.file.name} video`}
                 />
               </div>
             )}
