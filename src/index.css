@@ -348,7 +348,7 @@
      Use a single variable so desktop/mobile speeds stay consistent
      and avoid duplicated, conflicting rules elsewhere in the file. */
   :root {
-    --marquee-duration: 20s;
+    --marquee-duration: 15s;
     /* Much faster for smooth continuous flow */
   }
 
@@ -362,7 +362,7 @@
   /* Performance optimizations for reduced motion */
   @media (prefers-reduced-motion: reduce) {
 
-    .animate-marquee,
+    /* .animate-marquee removed to ensure it always runs */
     .animate-float,
     .animate-fade-up,
     .animate-pulse-glow {
