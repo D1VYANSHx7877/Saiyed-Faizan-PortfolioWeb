@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { cn } from "@/lib/utils";
 import { Volume2, VolumeX } from 'lucide-react';
 
@@ -13,6 +13,16 @@ export const IntroVideo = ({ onComplete, onExitStart }: IntroVideoProps) => {
     const [isPlaying, setIsPlaying] = useState(true);
     const [isExiting, setIsExiting] = useState(false);
     const [isMuted, setIsMuted] = useState(true);
+
+    const handleExit = useCallback(() => {
+        setIsExiting(true);
+        onExitStart(); // Trigger external animation sync
+        // Wait for exit animation
+        setTimeout(() => {
+            setIsPlaying(false);
+            onComplete();
+        }, 800);
+    }, [onExitStart, onComplete]);
 
     useEffect(() => {
         const video = videoRef.current;
@@ -45,17 +55,7 @@ export const IntroVideo = ({ onComplete, onExitStart }: IntroVideoProps) => {
             video.removeEventListener('ended', handleEnded);
             clearTimeout(autoSkipTimer);
         };
-    }, []);
-
-    const handleExit = () => {
-        setIsExiting(true);
-        onExitStart(); // Trigger external animation sync
-        // Wait for exit animation
-        setTimeout(() => {
-            setIsPlaying(false);
-            onComplete();
-        }, 800);
-    };
+    }, [handleExit]);
 
     if (!isPlaying) return null;
 

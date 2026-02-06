@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { Resend } from 'resend';
 
 /**
  * Vercel Serverless Function for Contact Form
@@ -90,7 +91,6 @@ export default async function handler(
     // Add to Vercel: RESEND_API_KEY environment variable
     
     if (process.env.RESEND_API_KEY) {
-      const { Resend } = require('resend');
       const resend = new Resend(process.env.RESEND_API_KEY);
 
       await resend.emails.send({
