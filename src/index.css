@@ -122,12 +122,9 @@
       height: auto;
     }
 
-    /* Reduce motion for better mobile performance */
-    *, *::before, *::after {
-      animation-duration: 0.2s !important;
-      animation-delay: 0s !important;
-      transition-duration: 0.2s !important;
-      transition-delay: 0s !important;
+    /* Mobile optimizations */
+    body {
+      overflow-x: hidden;
     }
   }
 

@@ -66,7 +66,7 @@ export function ClientsMarquee() {
           <div
             className="flex w-max items-center gap-6 md:gap-8 lg:gap-10 py-6 md:py-8 lg:py-10 will-change-transform backface-visibility-hidden transform-gpu"
             style={{
-              animation: 'marquee 10s linear infinite',
+              animation: window.innerWidth < 768 ? 'marquee 20s linear infinite' : 'marquee 15s linear infinite',
               animationPlayState: 'running'
             }}
             onMouseEnter={(e) => {
