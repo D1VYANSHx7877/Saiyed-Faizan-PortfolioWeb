@@ -56,160 +56,86 @@ export function HeroSectionUpdated() {
       <div className="absolute bottom-32 right-[20%] w-12 md:w-16 h-12 md:h-16 border-2 border-accent/40 rounded-full animate-float" style={{ animationDelay: '2s' }} />
       <div className="absolute top-1/3 right-[10%] w-6 md:w-8 h-6 md:h-8 bg-primary/30 rotate-12 animate-float" style={{ animationDelay: '1s' }} />
 
-      {/* Content */}
+      {/* Content - Same layout for mobile and desktop */}
       <div className="relative z-10 container mx-auto px-4 md:px-6 h-full flex items-center">
-        <div className="w-full">
-          {/* Mobile Layout - Stack vertically */}
-          <div className="block lg:hidden">
-            {/* Mobile: Text Content First */}
-            <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              {/* Main Title - Mobile optimized */}
-              <h1 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-2 animate-fade-up leading-[0.9]">
-                SAIYED
-              </h1>
-              <h1 className="font-display text-4xl sm:text-5xl font-bold mb-3 animate-fade-up delay-100 leading-[0.9]">
-                <span className="text-gradient">FAIZAN</span>
-              </h1>
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6 lg:gap-8 items-center">
+          {/* Left - Text Content */}
+          <div className={`col-span-1 md:col-span-1 lg:col-span-3 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {/* Main Title */}
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground mb-2 md:mb-3 animate-fade-up leading-[0.9]">
+              SAIYED
+            </h1>
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-3 md:mb-4 animate-fade-up delay-100 leading-[0.9]">
+              <span className="text-gradient">FAIZAN</span>
+            </h1>
 
-              {/* Subtitle - Mobile optimized */}
-              <p className="font-heading text-lg sm:text-xl text-muted-foreground mb-3 animate-fade-up delay-200 tracking-wide">
-                Cinematographer & Creator
+            {/* Subtitle */}
+            <p className="font-heading text-lg sm:text-xl md:text-2xl lg:text-3xl text-muted-foreground mb-3 md:mb-4 animate-fade-up delay-200 tracking-wide">
+              Cinematographer & Creator
+            </p>
+
+            {/* Animated Tagline */}
+            <div className="h-8 md:h-10 mb-6 md:mb-8 overflow-hidden">
+              <p
+                key={currentTagline}
+                className="text-sm sm:text-base md:text-lg lg:text-xl text-foreground/80 font-body animate-fade-up delay-300"
+              >
+                {taglines[currentTagline]}
               </p>
+            </div>
 
-              {/* Animated Tagline - Mobile optimized */}
-              <div className="h-8 mb-6 overflow-hidden">
-                <p
-                  key={currentTagline}
-                  className="text-sm sm:text-base text-foreground/80 font-body animate-fade-up delay-300"
-                >
-                  {taglines[currentTagline]}
-                </p>
-              </div>
-
-              {/* CTA Buttons - Mobile optimized */}
-              <div className="flex flex-col gap-3 animate-fade-up delay-400 mb-6">
-                <Button variant="hero" size="lg" onClick={scrollToPortfolio} className="text-sm px-6 py-4 w-full">
-                  <Play size={16} className="mr-2" />
-                  Watch My Work
-                </Button>
-                <Button variant="heroOutline" size="lg" onClick={scrollToContact} className="text-sm px-6 py-4 w-full">
-                  Let's Create
-                </Button>
-              </div>
-
-              {/* Mobile Hero Image */}
-              <div className="relative w-full mt-8 animate-fade-up delay-500">
-                <div className="relative aspect-video rounded-lg overflow-hidden bg-card border border-border/50">
-                  {heroImageLoaded && !heroImageError ? (
-                    <img
-                      src="/assets/images/hero-image.jpg"
-                      alt="Saiyed Faizan - Cinematographer"
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-card via-muted to-card flex items-center justify-center">
-                      <div className="text-center p-4">
-                        <div className="w-20 h-20 mx-auto mb-3 rounded-full bg-gradient-poster flex items-center justify-center">
-                          <span className="text-3xl font-display font-bold text-foreground">SF</span>
-                        </div>
-                        <p className="text-xs text-muted-foreground font-heading">Upload Portrait</p>
-                      </div>
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-40" />
-                </div>
-              </div>
-
-              {/* Location - Mobile */}
-              <div className="animate-fade-up delay-500 text-center mt-4">
-                <p className="font-display text-sm tracking-[0.2em] text-primary uppercase">
-                  Delhi, India
-                </p>
-              </div>
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 animate-fade-up delay-400 mb-4 md:mb-6">
+              <Button variant="hero" size="lg" onClick={scrollToPortfolio} className="text-sm md:text-base px-6 md:px-8 py-4 md:py-5 w-full sm:w-auto">
+                <Play size={16} className="mr-2 md:w-5 md:h-5" />
+                Watch My Work
+              </Button>
+              <Button variant="heroOutline" size="lg" onClick={scrollToContact} className="text-sm md:text-base px-6 md:px-8 py-4 md:py-5 w-full sm:w-auto">
+                Let's Create
+              </Button>
             </div>
           </div>
 
-          {/* Desktop Layout - Side by side */}
-          <div className="hidden lg:grid lg:grid-cols-5 gap-6 lg:gap-8 items-center w-full">
-            {/* Left - Text Content */}
-            <div className={`lg:col-span-3 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              {/* Main Title - Desktop optimized */}
-              <h1 className="font-display text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground mb-2 md:mb-3 animate-fade-up leading-[0.9]">
-                SAIYED
-              </h1>
-              <h1 className="font-display text-6xl lg:text-7xl xl:text-8xl font-bold mb-3 md:mb-4 animate-fade-up delay-100 leading-[0.9]">
-                <span className="text-gradient">FAIZAN</span>
-              </h1>
+          {/* Right - Hero Image (shows on all screen sizes) */}
+          <div className={`col-span-1 md:col-span-1 lg:col-span-2 relative transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+            <div className="relative w-full">
+              {/* Neon border effect */}
+              <div className="absolute -inset-2 bg-gradient-poster rounded-lg md:rounded-xl blur-md opacity-50 animate-neon-pulse" />
 
-              {/* Subtitle - Desktop optimized */}
-              <p className="font-heading text-2xl lg:text-3xl text-muted-foreground mb-3 md:mb-4 animate-fade-up delay-200 tracking-wide">
-                Cinematographer & Creator
-              </p>
-
-              {/* Animated Tagline - Desktop optimized */}
-              <div className="h-10 mb-6 md:mb-8 overflow-hidden">
-                <p
-                  key={currentTagline}
-                  className="text-lg lg:text-xl text-foreground/80 font-body animate-fade-up delay-300"
-                >
-                  {taglines[currentTagline]}
-                </p>
-              </div>
-
-              {/* CTA Buttons - Desktop optimized */}
-              <div className="flex flex-row items-start gap-4 animate-fade-up delay-400 mb-4 md:mb-6">
-                <Button variant="hero" size="lg" onClick={scrollToPortfolio} className="text-base px-8 py-5">
-                  <Play size={18} className="mr-2" />
-                  Watch My Work
-                </Button>
-                <Button variant="heroOutline" size="lg" onClick={scrollToContact} className="text-base px-8 py-5">
-                  Let's Create
-                </Button>
-              </div>
-            </div>
-
-            {/* Right - Large Hero Image */}
-            <div className={`lg:col-span-2 relative transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-              <div className="relative w-full">
-                {/* Neon border effect */}
-                <div className="absolute -inset-2 bg-gradient-poster rounded-xl blur-md opacity-50 animate-neon-pulse" />
-
-                {/* Main image container - 16:9 aspect ratio */}
-                <div className="relative aspect-video rounded-xl overflow-hidden bg-card border-2 border-border/50">
-                  {/* Hero Image - Load from assets */}
-                  {heroImageLoaded && !heroImageError ? (
-                    <img
-                      src="/assets/images/hero-image.jpg"
-                      alt="Saiyed Faizan - Cinematographer"
-                      className={`w-full h-full object-cover transition-all duration-700 ${heroImageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}`}
-                      loading="eager"
-                    />
-                  ) : (
-                    // Placeholder when image not found
-                    <div className="w-full h-full bg-gradient-to-br from-card via-muted to-card flex items-center justify-center">
-                      <div className="text-center p-6">
-                        <div className="w-24 h-24 md:w-32 md:h-32 mx-auto mb-4 rounded-full bg-gradient-poster flex items-center justify-center">
-                          <span className="text-4xl md:text-5xl font-display font-bold text-foreground">SF</span>
-                        </div>
-                        <p className="text-sm md:text-base text-muted-foreground font-heading">Upload Portrait</p>
-                        <p className="text-xs text-muted-foreground mt-2">Place at: /public/assets/images/hero-image.jpg</p>
+              {/* Main image container - 16:9 aspect ratio */}
+              <div className="relative aspect-video rounded-lg md:rounded-xl overflow-hidden bg-card border border-md:border-2 border-border/50">
+                {/* Hero Image - Load from assets */}
+                {heroImageLoaded && !heroImageError ? (
+                  <img
+                    src="/assets/images/hero-image.jpg"
+                    alt="Saiyed Faizan - Cinematographer"
+                    className={`w-full h-full object-cover transition-all duration-700 ${heroImageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}`}
+                    loading="eager"
+                  />
+                ) : (
+                  // Placeholder when image not found
+                  <div className="w-full h-full bg-gradient-to-br from-card via-muted to-card flex items-center justify-center">
+                    <div className="text-center p-4 md:p-6">
+                      <div className="w-16 h-16 md:w-24 md:h-24 mx-auto mb-3 md:mb-4 rounded-full bg-gradient-poster flex items-center justify-center">
+                        <span className="text-xl md:text-4xl font-display font-bold text-foreground">SF</span>
                       </div>
+                      <p className="text-xs md:text-sm text-muted-foreground font-heading">Upload Portrait</p>
+                      <p className="text-xs text-muted-foreground mt-1 md:mt-2">Place at: /public/assets/images/hero-image.jpg</p>
                     </div>
-                  )}
-
-                  {/* Overlay effects */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-40" />
-
-                  {/* Delhi, India - Desktop */}
-                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
-                    <p className="font-display text-sm md:text-base tracking-[0.2em] text-primary uppercase whitespace-nowrap">
-                      Delhi, India
-                    </p>
                   </div>
-                </div>
+                )}
 
+                {/* Overlay effects */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-40" />
+
+                {/* Delhi, India */}
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+                  <p className="font-display text-xs md:text-sm tracking-[0.2em] text-primary uppercase whitespace-nowrap">
+                    Delhi, India
+                  </p>
+                </div>
               </div>
+
             </div>
           </div>
         </div>
