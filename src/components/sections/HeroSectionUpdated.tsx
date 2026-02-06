@@ -97,8 +97,32 @@ export function HeroSectionUpdated() {
                 </Button>
               </div>
 
+              {/* Mobile Hero Image */}
+              <div className="relative w-full mt-8 animate-fade-up delay-500">
+                <div className="relative aspect-video rounded-lg overflow-hidden bg-card border border-border/50">
+                  {heroImageLoaded && !heroImageError ? (
+                    <img
+                      src="/assets/images/hero-image.jpg"
+                      alt="Saiyed Faizan - Cinematographer"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-card via-muted to-card flex items-center justify-center">
+                      <div className="text-center p-4">
+                        <div className="w-20 h-20 mx-auto mb-3 rounded-full bg-gradient-poster flex items-center justify-center">
+                          <span className="text-3xl font-display font-bold text-foreground">SF</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground font-heading">Upload Portrait</p>
+                      </div>
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-40" />
+                </div>
+              </div>
+
               {/* Location - Mobile */}
-              <div className="animate-fade-up delay-500 text-center">
+              <div className="animate-fade-up delay-500 text-center mt-4">
                 <p className="font-display text-sm tracking-[0.2em] text-primary uppercase">
                   Delhi, India
                 </p>

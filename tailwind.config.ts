@@ -128,7 +128,7 @@ export default {
         marquee: "marquee 5s linear infinite",
         "infinite-scroll": "infinite-scroll 20s linear infinite",
         "neon-pulse": "neon-pulse 2s ease-in-out infinite",
-        "oscillate-vertical": "oscillate-vertical 3s ease-in-out infinite",
+        "oscillate-vertical": "oscillate-vertical 4.5s ease-in-out infinite",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

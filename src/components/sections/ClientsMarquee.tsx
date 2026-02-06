@@ -86,7 +86,7 @@ export function ClientsMarquee() {
                 key={`${client.id}-${index}`}
                 className="flex-shrink-0"
               >
-                <div className="relative flex flex-col items-center gap-3 px-6 py-5 rounded-xl border border-border/50 backdrop-blur-sm shadow-lg hover:shadow-[0_20px_60px_hsl(var(--primary)/0.15)] transition-all duration-500 hover:-translate-y-2 hover:scale-110 overflow-hidden group/logo animate-float" style={{ animationDelay: `${index * 0.1}s` }}>
+                <div className="relative flex flex-col items-center gap-3 px-6 py-5 rounded-xl border border-border/50 backdrop-blur-sm shadow-lg hover:shadow-[0_20px_60px_hsl(var(--primary)/0.15)] transition-all duration-500 hover:-translate-y-2 hover:scale-110 overflow-hidden group/logo">
                   {/* Beautiful gradient backgrounds */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${getGradientClasses(index)} opacity-70 group-hover/logo:opacity-100 transition-opacity duration-500`} />
                   <div className="absolute inset-0 bg-gradient-to-tl from-neon-purple/20 via-transparent to-neon-cyan/15 opacity-50 group-hover/logo:opacity-80 transition-opacity duration-500" />
