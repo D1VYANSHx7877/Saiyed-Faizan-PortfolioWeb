@@ -348,13 +348,13 @@
      Use a single variable so desktop/mobile speeds stay consistent
      and avoid duplicated, conflicting rules elsewhere in the file. */
   :root {
-    --marquee-duration: 15s;
+    --marquee-duration: 10s;
     /* Much faster for smooth continuous flow */
   }
 
   @media (max-width: 767px) {
     :root {
-      --marquee-duration: 10s;
+      --marquee-duration: 7s;
       /* Very fast for high energy mobile feel */
     }
   }
