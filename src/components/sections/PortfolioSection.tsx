@@ -18,11 +18,15 @@ export function PortfolioSection() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasAutoplayed) {
-            setHasAutoplayed(true);
+            // Add a small delay to ensure smooth scrolling has finished
+            setTimeout(() => {
+              setHasAutoplayed(true);
+              console.log('Showreel autoplay triggered');
+            }, 500);
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 } // Lower threshold for earlier triggering
     );
 
     if (showreelRef.current) {
@@ -91,10 +95,10 @@ export function PortfolioSection() {
 
             <iframe
               className="w-full h-full"
-              src={`https://www.youtube.com/embed/ebwIzfk1fBc?si=dOQ8q9KJomCUMGUx&rel=0&modestbranding=1&autohide=1&showinfo=0${hasAutoplayed ? '&autoplay=1&mute=1' : ''}`}
+              src={`https://www.youtube.com/embed/ebwIzfk1fBc?si=dOQ8q9KJomCUMGUx&rel=0&modestbranding=1&autohide=1&showinfo=0&controls=1&fs=1&iv_load_policy=3&enablejsapi=1${hasAutoplayed ? '&autoplay=1&mute=1&start=0' : ''}`}
               title="Showreel Video"
               frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
               onLoad={() => {
                 setShowreelLoading(false);

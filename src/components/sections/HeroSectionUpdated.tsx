@@ -52,7 +52,7 @@ export function HeroSectionUpdated() {
       <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[100px] animate-pulse-glow" style={{ animationDelay: '1.5s' }} />
 
       {/* Floating geometric shapes */}
-      <div className="absolute top-20 left-[15%] w-16 md:w-24 h-16 md:h-24 border border-primary/30 rotate-45 animate-float" />
+      <div className="absolute top-20 left-[15%] w-16 md:w-24 h-16 md:h-24 border border-primary/30 animate-oscillate-vertical" />
       <div className="absolute bottom-32 right-[20%] w-12 md:w-16 h-12 md:h-16 border-2 border-accent/40 rounded-full animate-float" style={{ animationDelay: '2s' }} />
       <div className="absolute top-1/3 right-[10%] w-6 md:w-8 h-6 md:h-8 bg-primary/30 rotate-12 animate-float" style={{ animationDelay: '1s' }} />
 

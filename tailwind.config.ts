@@ -115,6 +115,10 @@ export default {
           "0%, 100%": { boxShadow: "0 0 20px hsl(var(--primary) / 0.5)" },
           "50%": { boxShadow: "0 0 40px hsl(var(--primary) / 0.8)" },
         },
+        "oscillate-vertical": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -124,6 +128,7 @@ export default {
         marquee: "marquee 4s linear infinite",
         "infinite-scroll": "infinite-scroll 20s linear infinite",
         "neon-pulse": "neon-pulse 2s ease-in-out infinite",
+        "oscillate-vertical": "oscillate-vertical 3s ease-in-out infinite",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
