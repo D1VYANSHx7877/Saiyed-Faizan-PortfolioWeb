@@ -18,8 +18,8 @@ const CLIENTS = [
   { id: 11, name: "Al-Jawaad Perfumes", logo: '/assets/logos/marquee/logo-11.webp' },
 ];
 
-// Duplicate list for seamless scrolling
-const MARQUEE_ITEMS = [...CLIENTS, ...CLIENTS];
+// Duplicate list for seamless scrolling (4 sets to ensure coverage on large screens with -50% translate)
+const MARQUEE_ITEMS = [...CLIENTS, ...CLIENTS, ...CLIENTS, ...CLIENTS];
 
 // Gradient combinations for each client
 const getGradientClasses = (index: number) => {
@@ -88,13 +88,13 @@ export function ClientsMarquee() {
                   <div className={`absolute inset-0 bg-gradient-to-br ${getGradientClasses(index)} opacity-70 group-hover/logo:opacity-100 transition-opacity duration-500`} />
                   <div className="absolute inset-0 bg-gradient-to-tl from-neon-purple/20 via-transparent to-neon-cyan/15 opacity-50 group-hover/logo:opacity-80 transition-opacity duration-500" />
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary)/0.1),_transparent_70%)] opacity-60 group-hover/logo:opacity-90 transition-opacity duration-500" />
-                  
+
                   {/* Animated border glow */}
                   <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/20 via-accent/15 to-primary/20 opacity-0 group-hover/logo:opacity-100 transition-opacity duration-500 blur-sm" />
-                  
+
                   {/* Shimmer effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover/logo:opacity-100 group-hover/logo:animate-shimmer transition-opacity duration-700" />
-                  
+
                   {/* Content container with proper z-index */}
                   <div className="relative z-10 flex flex-col items-center gap-3 w-full">
                     <div className="h-16 md:h-20 flex items-center justify-center w-full">

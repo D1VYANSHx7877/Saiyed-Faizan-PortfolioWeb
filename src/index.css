@@ -300,27 +300,20 @@
     will-change: scroll-position;
   }
 
-  /* Optimize marquee for smooth animation */
-  .animate-marquee {
-    will-change: transform;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    transform: translateZ(0);
-    perspective: 1000px;
-    /* Default (desktop/tablet): smooth fast scroll */
-    animation: marquee 8s linear infinite;
+  /* Consolidated marquee timing variable
+     Use a single variable so desktop/mobile speeds stay consistent
+     and avoid duplicated, conflicting rules elsewhere in the file. */
+  :root {
+    --marquee-duration: 40s; /* default desktop/tablet */
   }
 
-  /* Slightly faster on mobile for a brisk, smooth experience */
   @media (max-width: 767px) {
-    .animate-marquee {
-      animation-duration: 6s; /* faster but still smooth on phones */
-      will-change: transform;
-      -webkit-backface-visibility: hidden;
-      transform: translateZ(0);
+    :root {
+      --marquee-duration: 30s; /* faster on phones for perceived speed */
     }
   }
-  /* Performance optimizations for mobile */
+
+  /* Performance optimizations for reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .animate-marquee,
     .animate-float,
@@ -433,32 +426,20 @@
 /* Ultra-smooth marquee animation optimizations */
 @keyframes marquee {
   0% {
-    transform: translateX(0%);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
-/* Ensure smooth marquee performance */
+/* Consolidated marquee rule: fast & smooth on laptop, slightly faster on phones for perceived speed */
 .animate-marquee {
-  animation: marquee 10s linear infinite;
+  animation: marquee var(--marquee-duration) linear infinite;
   will-change: transform;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   transform: translateZ(0);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* Mobile performance optimizations */
-@media (max-width: 767px) {
-  .animate-marquee {
-    animation-duration: 12s; /* Even slower on mobile for better performance */
-  }
-  
-  /* Reduce motion for better mobile performance */
-  * {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
 }

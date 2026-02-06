@@ -104,8 +104,8 @@ export default {
           "50%": { opacity: "0.8" },
         },
         marquee: {
-          "0%": { transform: "translateX(0%)" },
-          "100%": { transform: "translateX(-50%)" },
+          "0%": { transform: "translate3d(0, 0, 0)" },
+          "100%": { transform: "translate3d(-50%, 0, 0)" },
         },
         "infinite-scroll": {
           from: { transform: "translateX(0)" },
@@ -125,7 +125,7 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         shimmer: "shimmer 2s linear infinite",
         "pulse-glow": "pulse-glow 3s ease-in-out infinite",
-        marquee: "marquee 8s linear infinite",
+        marquee: "marquee 40s linear infinite",
         "infinite-scroll": "infinite-scroll 20s linear infinite",
         "neon-pulse": "neon-pulse 2s ease-in-out infinite",
         "oscillate-vertical": "oscillate-vertical 14s ease-in-out infinite",
@@ -147,6 +147,10 @@ export default {
       },
       transitionTimingFunction: {
         "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "intro": "cubic-bezier(0.87, 0, 0.13, 1)",
+      },
+      transitionDuration: {
+        "1500": "1500ms",
       },
     },
   },
