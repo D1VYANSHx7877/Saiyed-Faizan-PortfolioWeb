@@ -18,8 +18,8 @@ const CLIENTS = [
   { id: 11, name: "Al-Jawaad Perfumes", logo: '/assets/logos/marquee/logo-11.webp' },
 ];
 
-// Duplicate list for seamless scrolling (2 sets are sufficient for a seamless -50% translate loop)
-const MARQUEE_ITEMS = [...CLIENTS, ...CLIENTS];
+// Duplicate list for seamless scrolling (4 sets to ensure coverage on large screens with -50% translate)
+const MARQUEE_ITEMS = [...CLIENTS, ...CLIENTS, ...CLIENTS, ...CLIENTS];
 
 // Gradient combinations for each client
 const getGradientClasses = (index: number) => {
