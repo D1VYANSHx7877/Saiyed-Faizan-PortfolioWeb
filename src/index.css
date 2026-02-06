@@ -304,12 +304,12 @@
      Use a single variable so desktop/mobile speeds stay consistent
      and avoid duplicated, conflicting rules elsewhere in the file. */
   :root {
-    --marquee-duration: 40s; /* default desktop/tablet */
+    --marquee-duration: 20s; /* default desktop/tablet */
   }
 
   @media (max-width: 767px) {
     :root {
-      --marquee-duration: 30s; /* faster on phones for perceived speed */
+      --marquee-duration: 15s; /* faster on phones for perceived speed */
     }
   }
 

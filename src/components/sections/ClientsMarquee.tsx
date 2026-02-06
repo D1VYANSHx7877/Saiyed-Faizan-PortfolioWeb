@@ -64,24 +64,13 @@ export function ClientsMarquee() {
 
         <div className="group">
           <div
-            className="flex w-max items-center gap-6 md:gap-8 lg:gap-10 py-6 md:py-8 lg:py-10 animate-marquee"
+            className="flex w-max items-center py-6 md:py-8 lg:py-10 animate-marquee"
             role="list"
-            onMouseEnter={(e) => {
-              // Only pause on hover for desktop
-              if (window.innerWidth >= 768) {
-                (e.currentTarget as HTMLDivElement).style.animationPlayState = 'paused';
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (window.innerWidth >= 768) {
-                (e.currentTarget as HTMLDivElement).style.animationPlayState = 'running';
-              }
-            }}
           >
             {MARQUEE_ITEMS.map((client, index) => (
               <div
                 key={`${client.id}-${index}`}
-                className="flex-shrink-0"
+                className="flex-shrink-0 px-3 md:px-4 lg:px-5"
               >
                 <div className="relative flex flex-col items-center gap-3 px-6 py-5 rounded-xl border border-border/50 backdrop-blur-sm shadow-lg hover:shadow-[0_20px_60px_hsl(var(--primary)/0.15)] transition-all duration-500 hover:-translate-y-2 hover:scale-110 overflow-hidden group/logo">
                   {/* Beautiful gradient backgrounds */}
