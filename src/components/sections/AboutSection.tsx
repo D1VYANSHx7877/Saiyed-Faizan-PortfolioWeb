@@ -1,11 +1,11 @@
 import { Camera, Film, Palette, Wand2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { 
-  SiAdobepremierepro, 
-  SiAdobephotoshop, 
-  SiAdobeaftereffects, 
+import {
+  SiAdobepremierepro,
+  SiAdobephotoshop,
+  SiAdobeaftereffects,
   SiAdobelightroom,
-  SiBlackmagicdesign 
+  SiBlackmagicdesign
 } from 'react-icons/si';
 
 const values = [
@@ -33,32 +33,32 @@ const values = [
 
 // Technical tools with exact brand icons from react-icons
 const technicalTools = [
-  { 
-    name: 'Premiere Pro', 
+  {
+    name: 'Premiere Pro',
     Icon: SiAdobepremierepro,
     description: 'Video Editing',
     color: 'text-[#EA77FF]' // Adobe purple
   },
-  { 
-    name: 'DaVinci Resolve', 
+  {
+    name: 'DaVinci Resolve',
     Icon: SiBlackmagicdesign,
     description: 'Color Grading',
     color: 'text-[#FF6B35]' // DaVinci orange
   },
-  { 
-    name: 'After Effects', 
+  {
+    name: 'After Effects',
     Icon: SiAdobeaftereffects,
     description: 'Motion Graphics',
     color: 'text-[#9999FF]' // Adobe blue-purple
   },
-  { 
-    name: 'Photoshop', 
+  {
+    name: 'Photoshop',
     Icon: SiAdobephotoshop,
     description: 'Photo Editing',
     color: 'text-[#31A8FF]' // Adobe blue
   },
-  { 
-    name: 'Lightroom', 
+  {
+    name: 'Lightroom',
     Icon: SiAdobelightroom,
     description: 'Photo Processing',
     color: 'text-[#FF6B9D]' // Adobe pink
@@ -68,27 +68,17 @@ const technicalTools = [
 export function AboutSection() {
   const [aboutImageLoaded, setAboutImageLoaded] = useState(false);
   const [aboutImageError, setAboutImageError] = useState(false);
-  const [aboutImageSrc, setAboutImageSrc] = useState('/assets/images/about-image.jpg');
+  const [aboutImageSrc, setAboutImageSrc] = useState('/assets/images/about-image.JPG');
 
-  // Try to load about image - check both .jpg and .JPG extensions
+  // Load about image
   useEffect(() => {
     const img = new Image();
-    // Try lowercase first
-    img.src = '/assets/images/about-image.jpg';
+    img.src = '/assets/images/about-image.JPG';
     img.onload = () => {
       setAboutImageLoaded(true);
-      setAboutImageSrc('/assets/images/about-image.jpg');
+      setAboutImageSrc('/assets/images/about-image.JPG');
     };
-    img.onerror = () => {
-      // Try uppercase extension
-      const imgUpper = new Image();
-      imgUpper.src = '/assets/images/about-image.JPG';
-      imgUpper.onload = () => {
-        setAboutImageLoaded(true);
-        setAboutImageSrc('/assets/images/about-image.JPG');
-      };
-      imgUpper.onerror = () => setAboutImageError(true);
-    };
+    img.onerror = () => setAboutImageError(true);
   }, []);
 
   return (
@@ -145,19 +135,19 @@ export function AboutSection() {
               </h3>
               <div className="space-y-4 text-muted-foreground leading-relaxed font-body">
                 <p>
-                  Hello! I'm Saiyed Faizan, a passionate cinematographer and video editor 
-                  based in Delhi. My journey into the world of visual storytelling began 
-                  over 4 years ago, driven by an insatiable curiosity for how images can 
+                  Hello! I'm Saiyed Faizan, a passionate cinematographer and video editor
+                  based in Delhi. My journey into the world of visual storytelling began
+                  over 4 years ago, driven by an insatiable curiosity for how images can
                   move people emotionally.
                 </p>
                 <p>
-                  For me, creating visual content goes beyond just editing; it's about 
-                  enhancing user experiences, striking the perfect balance between 
-                  aesthetics and storytelling, and crafting visuals that form emotional 
+                  For me, creating visual content goes beyond just editing; it's about
+                  enhancing user experiences, striking the perfect balance between
+                  aesthetics and storytelling, and crafting visuals that form emotional
                   connections with viewers.
                 </p>
                 <p>
-                  With a creative mind and a keen eye for detail, I am dedicated to 
+                  With a creative mind and a keen eye for detail, I am dedicated to
                   refining my skills and bringing unique visions to life.
                 </p>
               </div>
@@ -169,8 +159,8 @@ export function AboutSection() {
                 Creative Philosophy
               </h4>
               <p className="text-muted-foreground italic leading-relaxed font-body">
-                "I believe that the best visual stories emerge when technical expertise 
-                meets emotional intelligence. Every frame should serve a purpose, every 
+                "I believe that the best visual stories emerge when technical expertise
+                meets emotional intelligence. Every frame should serve a purpose, every
                 edit should enhance the narrative."
               </p>
             </div>
@@ -190,7 +180,7 @@ export function AboutSection() {
                     >
                       <div className="flex flex-col items-center gap-2">
                         <div className="w-12 h-12 rounded-lg bg-secondary flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-secondary/80">
-                          <IconComponent 
+                          <IconComponent
                             className={`${tool.color} transition-colors duration-300`}
                             size={24}
                           />
