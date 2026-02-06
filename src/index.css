@@ -304,9 +304,22 @@
   .animate-marquee {
     will-change: transform;
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
     perspective: 1000px;
+    /* Default (desktop/tablet): smooth fast scroll */
+    animation: marquee 8s linear infinite;
   }
 
+  /* Slightly faster on mobile for a brisk, smooth experience */
+  @media (max-width: 767px) {
+    .animate-marquee {
+      animation-duration: 6s; /* faster but still smooth on phones */
+      will-change: transform;
+      -webkit-backface-visibility: hidden;
+      transform: translateZ(0);
+    }
+  }
   /* Performance optimizations for mobile */
   @media (prefers-reduced-motion: reduce) {
     .animate-marquee,

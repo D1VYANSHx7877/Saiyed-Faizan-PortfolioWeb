@@ -64,20 +64,17 @@ export function ClientsMarquee() {
 
         <div className="group">
           <div
-            className="flex w-max items-center gap-6 md:gap-8 lg:gap-10 py-6 md:py-8 lg:py-10 will-change-transform backface-visibility-hidden transform-gpu"
-            style={{
-              animation: 'marquee 8s linear infinite',
-              animationPlayState: 'running'
-            }}
+            className="flex w-max items-center gap-6 md:gap-8 lg:gap-10 py-6 md:py-8 lg:py-10 animate-marquee"
+            role="list"
             onMouseEnter={(e) => {
               // Only pause on hover for desktop
               if (window.innerWidth >= 768) {
-                e.currentTarget.style.animationPlayState = 'paused';
+                (e.currentTarget as HTMLDivElement).style.animationPlayState = 'paused';
               }
             }}
             onMouseLeave={(e) => {
               if (window.innerWidth >= 768) {
-                e.currentTarget.style.animationPlayState = 'running';
+                (e.currentTarget as HTMLDivElement).style.animationPlayState = 'running';
               }
             }}
           >
