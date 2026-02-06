@@ -10,7 +10,19 @@ export function PortfolioSection() {
   const [showreelError, setShowreelError] = useState(false);
   const [showreelLoading, setShowreelLoading] = useState(true);
   const [hasAutoplayed, setHasAutoplayed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const showreelRef = useRef<HTMLDivElement>(null);
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Autoplay showreel when section comes into view
   useEffect(() => {
@@ -18,15 +30,22 @@ export function PortfolioSection() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasAutoplayed) {
-            // Add a small delay to ensure smooth scrolling has finished
-            setTimeout(() => {
+            // On mobile, don't autoplay due to browser restrictions
+            if (!isMobile) {
+              // Add a small delay to ensure smooth scrolling has finished
+              setTimeout(() => {
+                setHasAutoplayed(true);
+                console.log('Showreel autoplay triggered');
+              }, 500);
+            } else {
+              // On mobile, just mark as "viewed" without autoplay
               setHasAutoplayed(true);
-              console.log('Showreel autoplay triggered');
-            }, 500);
+              console.log('Showreel section reached on mobile');
+            }
           }
         });
       },
-      { threshold: 0.3 } // Lower threshold for earlier triggering
+      { threshold: isMobile ? 0.5 : 0.3 } // Higher threshold for mobile
     );
 
     if (showreelRef.current) {
@@ -34,7 +53,7 @@ export function PortfolioSection() {
     }
 
     return () => observer.disconnect();
-  }, [hasAutoplayed]);
+  }, [hasAutoplayed, isMobile]);
 
   // Set first folder as active when loaded
   if (!activeFolder && folders.length > 0) {
@@ -50,14 +69,14 @@ export function PortfolioSection() {
 
       <div className="container mx-auto px-6 relative">
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <p className="text-primary font-heading font-semibold tracking-[0.2em] uppercase text-sm mb-4 animate-fade-up">
+        <div className="text-center mb-8 md:mb-12 md:mb-16">
+          <p className="text-primary font-heading font-semibold tracking-[0.2em] uppercase text-xs md:text-sm mb-3 md:mb-4 animate-fade-up">
             Portfolio
           </p>
-          <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 animate-fade-up delay-100">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl xl:text-6xl lg:text-7xl font-bold text-foreground mb-4 md:mb-6 animate-fade-up delay-100">
             MY <span className="text-gradient">WORK</span>
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed animate-fade-up delay-200 font-body max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-muted-foreground leading-relaxed animate-fade-up delay-200 font-body max-w-2xl mx-auto px-4 md:px-0">
             A collection of visuals showcasing my passion for storytelling.
             Each project is crafted with attention to detail and creative vision.
           </p>
@@ -95,7 +114,7 @@ export function PortfolioSection() {
 
             <iframe
               className="w-full h-full"
-              src={`https://www.youtube.com/embed/ebwIzfk1fBc?si=dOQ8q9KJomCUMGUx&rel=0&modestbranding=1&autohide=1&showinfo=0&controls=1&fs=1&iv_load_policy=3&enablejsapi=1${hasAutoplayed ? '&autoplay=1&mute=1&start=0' : ''}`}
+              src={`https://www.youtube.com/embed/ebwIzfk1fBc?si=dOQ8q9KJomCUMGUx&rel=0&modestbranding=1&autohide=1&showinfo=0&controls=1&fs=1&iv_load_policy=3&enablejsapi=1${hasAutoplayed && !isMobile ? '&autoplay=1&mute=1&start=0' : ''}`}
               title="Showreel Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -163,7 +182,7 @@ export function PortfolioSection() {
 
             {/* Media Grid */}
             {currentFolder && (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
                 {currentFolder.files.map((file) => (
                   <div
                     key={file.id}
@@ -171,7 +190,7 @@ export function PortfolioSection() {
                       file,
                       type: isVideo(file) ? 'video' : 'image'
                     })}
-                    className="group relative aspect-square rounded-xl overflow-hidden bg-card border border-border cursor-pointer hover:border-primary/50 transition-all duration-300 hover-lift"
+                    className="group relative aspect-square rounded-lg md:rounded-xl overflow-hidden bg-card border border-border cursor-pointer hover:border-primary/50 transition-all duration-300 hover-lift"
                   >
                     {isImage(file) && (
                       <img
