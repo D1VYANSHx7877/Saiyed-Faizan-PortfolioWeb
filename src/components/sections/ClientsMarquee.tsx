@@ -63,7 +63,7 @@ export function ClientsMarquee() {
         <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background via-background/80 to-transparent z-[5]" />
 
         <div className="group">
-          <div className="flex w-max items-center gap-10 py-10 animate-marquee group-hover:[animation-play-state:paused]">
+          <div className="flex w-max items-center gap-8 md:gap-10 py-8 md:py-10 animate-marquee group-hover:[animation-play-state:paused] will-change-transform">
             {MARQUEE_ITEMS.map((client, index) => (
               <div
                 key={`${client.id}-${index}`}

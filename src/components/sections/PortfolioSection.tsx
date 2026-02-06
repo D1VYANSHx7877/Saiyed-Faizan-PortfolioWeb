@@ -67,79 +67,24 @@ export function PortfolioSection() {
               </div>
             )}
 
-            <video
-              className="w-full h-full object-cover"
-              controls
-              playsInline
-              preload="none"
-              muted
-              loop
-              poster="/assets/images/hero-image.jpg"
-              onLoadedData={() => {
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/ebwIzfk1fBc?si=dOQ8q9KJomCUMGUx&rel=0&modestbranding=1&autohide=1&showinfo=0"
+              title="Showreel Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              onLoad={() => {
                 setShowreelLoading(false);
                 setShowreelError(false);
-                console.log('Showreel video loaded successfully');
+                console.log('Showreel iframe loaded successfully');
               }}
-              onCanPlay={() => {
-                setShowreelLoading(false);
-                console.log('Showreel video can play');
-              }}
-              onError={(e) => {
-                console.error('Showreel video error:', e);
-                console.error('Video error code:', e.target?.error?.code);
-                console.error('Video error message:', e.target?.error?.message);
+              onError={() => {
+                console.error('Showreel iframe error');
                 setShowreelError(true);
                 setShowreelLoading(false);
               }}
-              onLoadStart={() => {
-                setShowreelLoading(true);
-                console.log('Showreel video loading started');
-              }}
-              onPlay={() => {
-                console.log('Showreel video started playing');
-                // Hide play button when video starts
-                const playButton = document.querySelector('.group\\/play') as HTMLElement;
-                if (playButton) {
-                  playButton.style.opacity = '0';
-                  playButton.style.pointerEvents = 'none';
-                }
-              }}
-              onPause={() => {
-                console.log('Showreel video paused');
-                // Show play button when video pauses
-                const playButton = document.querySelector('.group\\/play') as HTMLElement;
-                if (playButton) {
-                  playButton.style.opacity = '1';
-                  playButton.style.pointerEvents = 'auto';
-                }
-              }}
-              onWaiting={() => console.log('Showreel video buffering')}
-              onStalled={() => console.log('Showreel video stalled')}
-            >
-              <source src="YOUR_VIDEO_URL_HERE" type="video/mp4" />
-              <track kind="captions" srcLang="en" label="English" />
-              Your browser does not support the video tag.
-            </video>
-
-            {/* Custom Play Button Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none opacity-100 transition-opacity duration-300 group-hover:opacity-80">
-              <button
-                className="pointer-events-auto w-16 h-16 md:w-20 md:h-20 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 group/play opacity-100 group-hover:scale-105"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const video = e.currentTarget.closest('.relative')?.querySelector('video') as HTMLVideoElement;
-                  if (video) {
-                    video.play().catch(console.error);
-                    // Hide the button after clicking
-                    e.currentTarget.style.opacity = '0';
-                    e.currentTarget.style.pointerEvents = 'none';
-                  }
-                }}
-                aria-label="Play showreel video"
-              >
-                <Play className="w-6 h-6 md:w-8 md:h-8 text-black ml-1 group-hover/play:scale-110 transition-transform duration-200" />
-              </button>
-            </div>
+            ></iframe>
 
             {/* Copy overlay */}
             <div className="pointer-events-none absolute bottom-4 left-4 md:bottom-8 md:left-8 z-10">

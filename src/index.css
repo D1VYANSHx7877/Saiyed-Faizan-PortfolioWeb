@@ -91,11 +91,44 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Satoshi', 'Inter', sans-serif;
+    /* Performance optimizations */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Clash Display', 'Poppins', sans-serif;
     @apply font-semibold tracking-tight;
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    * {
+      /* Prevent horizontal scroll on mobile */
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Improve touch targets on mobile */
+    button, a, input, select, textarea {
+      min-height: 44px;
+      min-width: 44px;
+    }
+
+    /* Optimize images for mobile */
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Reduce motion for better mobile performance */
+    *, *::before, *::after {
+      animation-duration: 0.2s !important;
+      animation-delay: 0s !important;
+      transition-duration: 0.2s !important;
+      transition-delay: 0s !important;
+    }
   }
 
   ::selection {
@@ -268,6 +301,23 @@
   /* Premium Marquee Effects */
   .will-change-scroll {
     will-change: scroll-position;
+  }
+
+  /* Optimize marquee for smooth animation */
+  .animate-marquee {
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* Performance optimizations for mobile */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee,
+    .animate-float,
+    .animate-fade-up,
+    .animate-pulse-glow {
+      animation: none !important;
+    }
   }
 
   /* Glass morphism effect */
