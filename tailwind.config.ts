@@ -125,7 +125,7 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         shimmer: "shimmer 2s linear infinite",
         "pulse-glow": "pulse-glow 3s ease-in-out infinite",
-        marquee: "marquee 15s linear infinite",
+        marquee: "marquee 8s linear infinite",
         "infinite-scroll": "infinite-scroll 20s linear infinite",
         "neon-pulse": "neon-pulse 2s ease-in-out infinite",
         "oscillate-vertical": "oscillate-vertical 14s ease-in-out infinite",
