@@ -64,7 +64,7 @@ export function ClientsMarquee() {
 
         <div className="group">
           <div
-            className="flex w-max items-center py-6 md:py-8 lg:py-10 animate-marquee"
+            className="flex w-max max-w-none items-center py-6 md:py-8 lg:py-10 animate-marquee"
             role="list"
           >
             {MARQUEE_ITEMS.map((client, index) => (

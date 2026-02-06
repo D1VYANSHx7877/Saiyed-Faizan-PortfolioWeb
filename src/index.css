@@ -63,6 +63,9 @@
     /* Film Grain Texture */
     --grain-opacity: 0.04;
 
+    /* Marquee timing - adjusted for "fast" requirement */
+    --marquee-duration: 15s;
+
     --sidebar-background: 240 10% 6%;
     --sidebar-foreground: 0 0% 98%;
     --sidebar-primary: 270 100% 65%;
@@ -104,10 +107,8 @@
 
   /* Mobile optimizations */
   @media (max-width: 768px) {
-    * {
-      /* Prevent horizontal scroll on mobile */
-      max-width: 100%;
-      box-sizing: border-box;
+    :root {
+      --marquee-duration: 10s;
     }
 
     /* Improve touch targets on mobile */
@@ -298,19 +299,6 @@
   /* Premium Marquee Effects */
   .will-change-scroll {
     will-change: scroll-position;
-  }
-
-  /* Consolidated marquee timing variable
-     Use a single variable so desktop/mobile speeds stay consistent
-     and avoid duplicated, conflicting rules elsewhere in the file. */
-  :root {
-    --marquee-duration: 20s; /* default desktop/tablet */
-  }
-
-  @media (max-width: 767px) {
-    :root {
-      --marquee-duration: 15s; /* faster on phones for perceived speed */
-    }
   }
 
   /* Performance optimizations for reduced motion */
